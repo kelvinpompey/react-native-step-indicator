@@ -20,7 +20,7 @@ export default class StepIndicator extends Component {
 
     const defaultStyles = {
       stepIndicatorSize: 30,
-      currentStepIndicatorSize: 40,
+      currentStepIndicatorSize: 100,
       separatorStrokeWidth: 3,
       separatorStrokeUnfinishedWidth: 0,
       separatorStrokeFinishedWidth: 0,
@@ -292,6 +292,15 @@ export default class StepIndicator extends Component {
     )
   }
 
+  sizeForPosition = (position) => {
+    if(this.props.sizeForPosition) {
+      return this.props.sizeForPosition(position)
+    }
+    else {
+      return this.state.customStyles.stepIndicatorSize
+    }
+  }
+
   renderStep = position => {
     const {
       currentPosition,
@@ -343,9 +352,9 @@ export default class StepIndicator extends Component {
           backgroundColor: this.state.customStyles.stepIndicatorUnFinishedColor,
           borderWidth: this.state.customStyles.stepStrokeWidth,
           borderColor: this.state.customStyles.stepStrokeUnFinishedColor,
-          height: this.state.customStyles.stepIndicatorSize,
-          width: this.state.customStyles.stepIndicatorSize,
-          borderRadius: this.state.customStyles.stepIndicatorSize / 2
+          height: this.sizeForPosition(position), //this.state.customStyles.stepIndicatorSize,
+          width: this.sizeForPosition(position), //this.state.customStyles.stepIndicatorSize,
+          borderRadius: this.sizeForPosition(position) / 2 //this.state.customStyles.stepIndicatorSize / 2
         }
         indicatorLabelStyle = {
           overflow: 'hidden',
